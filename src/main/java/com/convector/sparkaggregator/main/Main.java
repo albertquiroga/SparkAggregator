@@ -85,7 +85,7 @@ public class Main {
             });
 
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("myfile.csv", true)));
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             CartoDBClientIF cartoClient = new ApiKeyCartoDBClient("cteixidogalvez", "7977f5eaebeb6279ca4b9224a1f2988f14ee1824");
 
             List<Tuple2<String, Integer>> list = counts.collect();
@@ -94,7 +94,7 @@ public class Main {
                     String str = t._1() + "," + t._2 + "," + df.format(upperThreshold) + "," + Coordinater.getCoordinates(t._1());
                     String subQuery = "ST_SetSRID(ST_Point(" + Coordinater.getCoordinates(t._1()) + "),4326),"
                             + "'" + t._1() + "',"
-                            + "TO_TIMESTAMP('" + df.format(upperThreshold) + "','YYYY-MM-DD HH24:MI:SS'),"
+                            + "TO_TIMESTAMP('" + df.format(upperThreshold) + "','DD/MM/YYYY HH24:MI:SS'),"
                             + "ST_SetSRID(ST_Point(" + Coordinater.getCoordinates(t._1()) + "),3857),"
                             + t._2() + ");";
                     System.out.println(str + "          INSERT INTO validacions_online_metro_animation (the_geom, codi_estacio, instant_pas, the_geom_webmercator, validacions) VALUES(" + subQuery);
